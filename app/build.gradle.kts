@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.hilt)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,11 +40,23 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.hilt.android)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
+    implementation(libs.arrow.core)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.moshi.kotlin.codegen)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.junit)
+    testRuntimeOnly(libs.junit.jupiter.engine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
