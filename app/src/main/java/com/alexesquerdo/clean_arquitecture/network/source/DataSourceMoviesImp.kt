@@ -23,5 +23,4 @@ class DataSourceMoviesImp @Inject constructor(
     override suspend fun getMovieDetails(movie: Int): Either<Failure, NetworkDetail> = tryCall {
         apiService.getMovieDetails(movie = movie)
     }
-
 }
