@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    private const val API_KEY = "5144449ae1ba8f90f5eb47d72bcca5a9"
+    private const val API_KEY = ""
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
