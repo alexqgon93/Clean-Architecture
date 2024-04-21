@@ -1,5 +1,6 @@
 package com.alexesquerdo.clean_arquitecture.network.di
 
+import com.alexesquerdo.clean_arquitecture.BuildConfig
 import com.alexesquerdo.clean_arquitecture.network.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -16,7 +17,6 @@ import java.util.concurrent.TimeUnit
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    private const val API_KEY = ""
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
@@ -24,7 +24,7 @@ object NetworkModule {
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val original: Request = chain.request()
             val httpUrl: HttpUrl = original.url
-            val url = httpUrl.newBuilder().addQueryParameter("api_key", API_KEY).build()
+            val url = httpUrl.newBuilder().addQueryParameter("api_key", BuildConfig.API_KEY).build()
             return@addInterceptor chain.proceed(request = original.newBuilder().url(url).build())
         }.callTimeout(10, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)

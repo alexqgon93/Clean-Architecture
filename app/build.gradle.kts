@@ -17,11 +17,12 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        android.buildFeatures.buildConfig = true
         val keystoreFile = project.rootProject.file("local.properties")
         val properties = Properties()
         properties.load(keystoreFile.inputStream())
         val apiKey = properties.getProperty("API_KEY") ?: ""
+        buildConfigField("API_KEY", apiKey)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -68,4 +69,15 @@ dependencies {
     testRuntimeOnly(libs.junit.jupiter.engine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+inline fun <reified ValueT> com.android.build.api.dsl.VariantDimension.buildConfigField(
+    name: String,
+    value: ValueT
+) {
+    val resolvedValue = when (value) {
+        is String -> "\"$value\""
+        else -> value
+    }.toString()
+    buildConfigField(ValueT::class.java.simpleName, name, resolvedValue)
 }
